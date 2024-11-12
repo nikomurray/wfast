@@ -3,7 +3,7 @@ export default function Header() {
     <header>
       <div className="container header">
         <h1>WFast</h1>
-        <p>Loging</p>
+        <button className="sign-up">Sign up</button>
       </div>
     </header>
   );

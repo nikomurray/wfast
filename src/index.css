@@ -3,9 +3,17 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #222;
   color: #fff;
   font-family: "Satoshi", sans-serif;
+}
+
+body {
+  background: rgb(52,52,52);
+  background: -moz-linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(0,0,0,1) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(0,0,0,1) 100%);
+  background: linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(0,0,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#343434",endColorstr="#000000",GradientType=1);
+  height: 100vh;
 }
 
 input,
@@ -20,7 +28,8 @@ textarea {
 }
 
 header {
-  box-shadow: 0 0 5px #fff;
+  box-shadow: 0 0 5px #ffffff59;
+  background: #000000b7;
 }
 
 .header {
@@ -28,6 +37,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+
+.header .sign-up {
+  border: solid #ffffffbd 1px;
+  border-radius: 32px;
+  padding: 0.5rem 2rem;
 }
 
 .container {
@@ -75,6 +91,12 @@ header {
   padding: 1rem;
   border-radius: 8px;
 }
+.message-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
 
 .message-form h2 {
   margin-bottom: 2rem;
@@ -113,5 +135,11 @@ header {
 
 .message-form .submit-btn:hover {
   background: #0f0f0f;
+}
+
+.interval {
+  width: 30%;
+  accent-color: rgb(187, 187, 187);
+
 }
 

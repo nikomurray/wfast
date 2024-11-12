@@ -3,13 +3,13 @@ import MessageForm from "../components/MessageForm";
 import { AppContext } from "../App";
 import { useContext } from "react";
 export default function Dashboard() {
-  const { isLogin, setIsLogin } = useContext(AppContext);
+  const { isLogin} = useContext(AppContext);
 
   return (
     <div className="container">
       <div className="dashboard">
         {!isLogin && <Qr />}
-        <MessageForm isLogin={isLogin} />
+        <MessageForm />
       </div>
     </div>
   );

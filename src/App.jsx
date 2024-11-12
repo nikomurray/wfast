@@ -6,9 +6,9 @@ export const AppContext = createContext();
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-
+  const [messageInterval , setMessageInterval] = useState(3)
   return (
-    <AppContext.Provider value={{ isLogin, setIsLogin }}>
+    <AppContext.Provider value={{ isLogin, setIsLogin , messageInterval , setMessageInterval }}>
       <Header />
       <Dashboard />
     </AppContext.Provider>
