@@ -5,10 +5,18 @@ import { createContext } from "react";
 export const AppContext = createContext();
 
 export default function App() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [messageInterval , setMessageInterval] = useState(3)
+  const [isLogin, setIsLogin] = useState(true);
+
+  const [messageData, setMessageData] = useState({
+    message: "",
+    interval: 3,
+    numbers: [],
+  });
+
   return (
-    <AppContext.Provider value={{ isLogin, setIsLogin , messageInterval , setMessageInterval }}>
+    <AppContext.Provider
+      value={{ isLogin, setIsLogin, messageData, setMessageData}}
+    >
       <Header />
       <Dashboard />
     </AppContext.Provider>
