@@ -102,7 +102,7 @@ export default function MessageForm() {
         gridColumn: isLogin ? "1/-1" : undefined,
       }}
     >
-      <h2>Campaign Configuration</h2>
+      <h2>Campaign configuration</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-field">
           <label htmlFor="message">Set message:</label>
