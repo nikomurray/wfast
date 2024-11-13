@@ -4,7 +4,13 @@ import * as XLSX from "xlsx";
 export default function MessageForm() {
   const [incorrectFile, setIncorrectFile] = useState(false);
 
-  const { isLogin, messageData, setMessageData } = useContext(AppContext);
+  const {
+    isLogin,
+    messageData,
+    setMessageData,
+    isSendingMessages,
+    setIsSendingMessages,
+  } = useContext(AppContext);
 
   const handleMessageChange = (e) => {
     setMessageData((prev) => ({ ...prev, message: e.target.value }));
@@ -81,7 +87,10 @@ export default function MessageForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic for form submission
+    if (!incorrectFile) {
+      setIsSendingMessages((prev) => !prev);
+    }
+    console.log(messageData);
   };
 
   return (
@@ -105,7 +114,7 @@ export default function MessageForm() {
             name="message"
             id="message"
             placeholder="Enter your message here..."
-            disabled={!isLogin}
+            disabled={!isLogin || isSendingMessages}
           />
         </div>
         <div className="input-field">
@@ -116,7 +125,7 @@ export default function MessageForm() {
             name="file"
             id="file"
             onChange={handleFileChange}
-            disabled={!isLogin}
+            disabled={!isLogin || isSendingMessages}
           />
           {incorrectFile && (
             <p style={{ color: "#f00" }}>
@@ -137,15 +146,16 @@ export default function MessageForm() {
             min="2"
             max="10"
             value={messageData.interval}
-            disabled={!isLogin}
+            disabled={!isLogin || isSendingMessages}
           />
           <span>{messageData.interval} seconds</span>
         </div>
         <input
           type="submit"
-          className="submit-btn"
-          value="Start Campaign"
+          className={`submit-btn`}
+          value={isSendingMessages ? "Stop campaing" : "Start Campaing"}
           disabled={!isLogin}
+          style={{ background: isSendingMessages && "#c20000" }}
         />
       </form>
     </div>

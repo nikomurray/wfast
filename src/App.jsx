@@ -6,7 +6,7 @@ export const AppContext = createContext();
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(true);
-
+  const [isSendingMessages, setIsSendingMessages] = useState(false);
   const [messageData, setMessageData] = useState({
     message: "",
     interval: 3,
@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <AppContext.Provider
-      value={{ isLogin, setIsLogin, messageData, setMessageData}}
+      value={{ isLogin, setIsLogin, messageData, setMessageData ,isSendingMessages, setIsSendingMessages }}
     >
       <Header />
       <Dashboard />
