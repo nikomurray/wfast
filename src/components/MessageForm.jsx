@@ -87,39 +87,10 @@ export default function MessageForm() {
     }
   };
 
-  const sendDataToServer = async (url, data) => {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        alert("Error sending data to the server");
-        setIsSendingMessages((prev) => !prev);
-        throw new Error("Error sending data to the server");
-      }
-
-      const result = await response.text();
-      console.log(result);
-    } catch (error) {
-      alert("Error sending data to the server");
-      setIsSendingMessages((prev) => !prev);
-      console.error("Error:", error);
-    }
-  };
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isIncorrectFile ) {
-      setIsSendingMessages((prev) => !prev);
-      // sendDataToServer("http://localhost:3000/messages", messageData);
-      socket.emit("messageData" , messageData)
-    }
+    socket.emit("messageData", messageData);
   };
-
   return (
     <div
       className="message-form"
