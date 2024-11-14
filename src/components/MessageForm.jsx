@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 import * as XLSX from "xlsx";
+
 export default function MessageForm() {
-  const [incorrectFile, setIncorrectFile] = useState(false);
+  const [isIncorrectFile, setIsIncorrectFile] = useState(false);
 
   const {
     isLogin,
@@ -10,6 +11,7 @@ export default function MessageForm() {
     setMessageData,
     isSendingMessages,
     setIsSendingMessages,
+    socket,
   } = useContext(AppContext);
 
   const handleMessageChange = (e) => {
@@ -38,12 +40,12 @@ export default function MessageForm() {
       validExtensions.includes(fileExtension);
 
     if (!isExcelFile) {
-      setIncorrectFile(true);
+      setIsIncorrectFile(true);
       e.target.value = "";
       return;
     }
 
-    setIncorrectFile(false);
+    setIsIncorrectFile(false);
     const fileValues = await readExcelFirstColumn(file);
     setMessageData((prev) => ({ ...prev, numbers: fileValues }));
   };
@@ -85,12 +87,38 @@ export default function MessageForm() {
     }
   };
 
+  const sendDataToServer = async (url, data) => {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        alert("Error sending data to the server");
+        setIsSendingMessages((prev) => !prev);
+        throw new Error("Error sending data to the server");
+      }
+
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      alert("Error sending data to the server");
+      setIsSendingMessages((prev) => !prev);
+      console.error("Error:", error);
+    }
+  };
+
+  const socketData = `socket data: ${messageData}`
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!incorrectFile) {
+    if (!isIncorrectFile ) {
       setIsSendingMessages((prev) => !prev);
+      sendDataToServer("http://localhost:3000/messages", messageData);
+      socket.emit("messageData" , socketData)
     }
-    console.log(messageData);
   };
 
   return (
@@ -127,7 +155,7 @@ export default function MessageForm() {
             onChange={handleFileChange}
             disabled={!isLogin || isSendingMessages}
           />
-          {incorrectFile && (
+          {isIncorrectFile && (
             <p style={{ color: "#f00" }}>
               Incorrect file! Please select a .xlsx file
             </p>
