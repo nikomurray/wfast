@@ -110,14 +110,13 @@ export default function MessageForm() {
     }
   };
 
-  const socketData = `socket data: ${messageData}`
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isIncorrectFile ) {
       setIsSendingMessages((prev) => !prev);
-      sendDataToServer("http://localhost:3000/messages", messageData);
-      socket.emit("messageData" , socketData)
+      // sendDataToServer("http://localhost:3000/messages", messageData);
+      socket.emit("messageData" , messageData)
     }
   };
 
