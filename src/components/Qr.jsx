@@ -1,12 +1,14 @@
+import { useContext } from "react";
+import { AppContext } from "../App";
+
 export default function Qr() {
+  const { qrCode } = useContext(AppContext);
+
   return (
     <div className="qr-container">
       <p>Vinculate your whatsapp account</p>
       <div className="qr-image">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuIy6HNc3zXzJ9-y-rNEfnaSdhcgeXytmnQg&s"
-          alt="qrcode"
-        />
+        {qrCode ? <img src={qrCode} alt="qrcode" /> : <p>Loading QR Code...</p>}
       </div>
     </div>
   );

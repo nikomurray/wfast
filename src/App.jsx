@@ -7,7 +7,8 @@ import { io } from "socket.io-client";
 export const AppContext = createContext();
 
 export default function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [qrCode, setQrCode] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
   const [isSendingMessages, setIsSendingMessages] = useState(false);
   const [messageData, setMessageData] = useState({
     message: "",
@@ -21,7 +22,8 @@ export default function App() {
     { date: "14:00hs", number: "1169427833", status: true },
     { date: "14:00hs", number: "1169427833", status: true },
     { date: "14:00hs", number: "1169427833", status: false },
-    { date: "14:00hs", number: "1169427833", status: true },{ date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: true },
     { date: "14:00hs", number: "1169427833", status: false },
     { date: "14:00hs", number: "1169427833", status: true },
   ]);
@@ -29,6 +31,13 @@ export default function App() {
   useEffect(() => {
     const socketInstance = io("http://localhost:3000");
     setSocket(socketInstance);
+
+    socketInstance.on("qr", (data) => {
+      setQrCode(data);
+    });
+    socketInstance.on("login", (data) => {
+      setIsLogin(data);
+    });
     return () => {
       socketInstance.disconnect();
     };
@@ -44,12 +53,12 @@ export default function App() {
         isSendingMessages,
         setIsSendingMessages,
         socket,
-        outputMessages
+        outputMessages,
+        qrCode,
       }}
     >
       <Header />
       <Dashboard />
-     
     </AppContext.Provider>
   );
 }
