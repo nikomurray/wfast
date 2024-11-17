@@ -50,6 +50,7 @@ header {
   max-width: 1600px;
   width: 90%;
   margin: 0 auto;
+  position: relative;
 }
 
 .dashboard {
@@ -145,4 +146,49 @@ header {
 
 .stop {
   background: red;
+}
+
+.output-card{
+  display: flex;
+  gap: 1rem;
+  width: 300px;
+  background: #252525;
+  padding:0.5rem 2rem;
+  justify-content: center;
+  border-radius: 10px;
+}
+.output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.129);
+  height: 80%;
+  padding: 1rem 0;
+  border-radius: 10px;
+  overflow-y: scroll  ;
+}
+
+.output-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.output-info {
+  position: absolute;
+  bottom: 1px;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.129);
+  padding: 0.5rem 0;
+  border-radius: 10px;
+}
+
+.sent {
+  color: #0f0;
+}
+
+.fail {
+  color: #f00;
 }

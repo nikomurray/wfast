@@ -15,6 +15,16 @@ export default function App() {
     numbers: [],
   });
   const [socket, setSocket] = useState(null);
+  const [outputMessages, setOutPutMessages] = useState([
+    { date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: false },
+    { date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: false },
+    { date: "14:00hs", number: "1169427833", status: true },{ date: "14:00hs", number: "1169427833", status: true },
+    { date: "14:00hs", number: "1169427833", status: false },
+    { date: "14:00hs", number: "1169427833", status: true },
+  ]);
 
   useEffect(() => {
     const socketInstance = io("http://localhost:3000");
@@ -34,10 +44,12 @@ export default function App() {
         isSendingMessages,
         setIsSendingMessages,
         socket,
+        outputMessages
       }}
     >
       <Header />
       <Dashboard />
+     
     </AppContext.Provider>
   );
 }

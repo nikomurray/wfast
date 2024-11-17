@@ -89,7 +89,14 @@ export default function MessageForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("messageData", messageData);
+    if (!isIncorrectFile && !isSendingMessages) {
+      setIsSendingMessages(true);
+      socket.emit("messageData", messageData);
+    }
+
+    if (!isIncorrectFile && isSendingMessages) {
+      setIsSendingMessages(false);
+    }
   };
   return (
     <div
@@ -97,7 +104,6 @@ export default function MessageForm() {
       style={{
         opacity: isLogin ? "1" : "0.5",
         pointerEvents: isLogin ? "auto" : "none",
-        gridColumn: isLogin ? "1/-1" : undefined,
       }}
     >
       <h2>Campaign configuration</h2>
