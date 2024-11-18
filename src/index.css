@@ -202,3 +202,16 @@ header {
 .fail {
   color: #f00;
 }
+
+.stop-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 22px;
+  margin-top: 2rem;
+  transition: all 0.2s ;
+  background: rgb(118, 15, 15);
+}
+
+.stop-btn:hover{
+  background: rgb(192, 27, 27);
+}

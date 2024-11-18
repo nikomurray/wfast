@@ -9,24 +9,26 @@ export const AppContext = createContext();
 export default function App() {
   const [qrCode, setQrCode] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
-  const [isSendingMessages, setIsSendingMessages] = useState(false);
+  const [isSendingMessages, setIsSendingMessages] = useState(stop);
   const [messageData, setMessageData] = useState({
     message: "",
     interval: 3,
     numbers: [],
   });
   const [socket, setSocket] = useState(null);
-  const [outputMessages, setOutPutMessages] = useState([
-    { date: "14:00hs", number: "1169427833", status: true },
-    { date: "14:00hs", number: "1169427833", status: false },
-    { date: "14:00hs", number: "1169427833", status: true },
-    { date: "14:00hs", number: "1169427833", status: true },
-    { date: "14:00hs", number: "1169427833", status: false },
-    { date: "14:00hs", number: "1169427833", status: true },
-    { date: "14:00hs", number: "1169427833", status: true },
-    { date: "14:00hs", number: "1169427833", status: false },
-    { date: "14:00hs", number: "1169427833", status: true },
-  ]);
+  const [outputMessages, setOutPutMessages] = useState([]);
+  const [totalNumbers, setTotalNumbers] = useState(0);
+  const [totalSent, setTotalSent] = useState(0);
+  const [totalFailed, setTotalFailed] = useState(0);
+  const [currentCount, setCurrentCount] = useState(0);
+
+  const clearAllValues = () => {
+    setOutPutMessages([]);
+    setTotalNumbers(0);
+    setTotalSent(0);
+    setTotalFailed(0);
+    setCurrentCount(0);
+  };
 
   useEffect(() => {
     const socketInstance = io("http://localhost:3000");
@@ -37,6 +39,21 @@ export default function App() {
     });
     socketInstance.on("login", (data) => {
       setIsLogin(data);
+    });
+    socketInstance.on("totalNumbers", (data) => {
+      setTotalNumbers(data);
+    });
+    socketInstance.on("report", (data) => {
+      setCurrentCount((prev) => prev + 1);
+      if (data.status) {
+        setTotalSent((prev) => prev + 1);
+      } else {
+        setTotalFailed((prev) => prev + 1);
+      }
+      setOutPutMessages((prev) => [...prev, data]);
+    });
+    socketInstance.on("finish", () => {
+      setIsSendingMessages(false);
     });
     return () => {
       socketInstance.disconnect();
@@ -53,8 +70,14 @@ export default function App() {
         isSendingMessages,
         setIsSendingMessages,
         socket,
+        setOutPutMessages,
         outputMessages,
         qrCode,
+        totalNumbers,
+        totalSent,
+        totalFailed,
+        currentCount,
+        clearAllValues
       }}
     >
       <Header />

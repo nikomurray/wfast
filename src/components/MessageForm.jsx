@@ -12,6 +12,8 @@ export default function MessageForm() {
     isSendingMessages,
     setIsSendingMessages,
     socket,
+    setOutPutMessages,
+    clearAllValues,
   } = useContext(AppContext);
 
   const handleMessageChange = (e) => {
@@ -89,15 +91,19 @@ export default function MessageForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    clearAllValues();
     if (!isIncorrectFile && !isSendingMessages) {
+      setOutPutMessages([]);
       setIsSendingMessages(true);
       socket.emit("messageData", messageData);
     }
-
-    if (!isIncorrectFile && isSendingMessages) {
-      setIsSendingMessages(false);
-    }
   };
+
+  const handleStop = () => {
+    socket.emit("stop");
+    setIsSendingMessages(false);
+  };
+
   return (
     <div
       className="message-form"
@@ -154,13 +160,19 @@ export default function MessageForm() {
           />
           <span>{messageData.interval} seconds</span>
         </div>
-        <input
-          type="submit"
-          className={`submit-btn`}
-          value={isSendingMessages ? "Stop campaing" : "Start Campaing"}
-          disabled={!isLogin}
-          style={{ background: isSendingMessages && "#c20000" }}
-        />
+
+        {isSendingMessages ? (
+          <button type="button" className="stop-btn" onClick={handleStop}>
+            Stop
+          </button>
+        ) : (
+          <input
+            type="submit"
+            className={`submit-btn`}
+            value="Start campaing"
+            disabled={!isLogin}
+          />
+        )}
       </form>
     </div>
   );
