@@ -9,9 +9,10 @@ export default function Dashboard() {
   return (
     <div className="container">
       <div className="dashboard">
+      <MessageForm />
         {isLogin && <Output />}
         {!isLogin && <Qr />}
-        <MessageForm />
+        
       </div>
     </div>
   );

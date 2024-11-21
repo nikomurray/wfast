@@ -8,7 +8,7 @@ export const AppContext = createContext();
 
 export default function App() {
   const [qrCode, setQrCode] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [isSendingMessages, setIsSendingMessages] = useState(false);
   const [messageData, setMessageData] = useState({
     message: "",

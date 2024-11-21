@@ -13,7 +13,7 @@ body {
   background: -webkit-linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(0,0,0,1) 100%);
   background: linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(0,0,0,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#343434",endColorstr="#000000",GradientType=1);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 input,
@@ -56,7 +56,7 @@ header {
 .dashboard {
   margin-top: 4rem;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr;
   padding: 2rem 0;
   gap: 2rem;
 }
@@ -173,10 +173,10 @@ header {
   align-items: center;
   gap: 1rem;
   background: rgba(0, 0, 0, 0.129);
-  height: 80%;
+  height: 550px;
   padding: 1rem 0;
   border-radius: 10px;
-  overflow-y: scroll  ;
+  overflow-y: scroll;
 }
 
 .output-title {
@@ -185,8 +185,7 @@ header {
 }
 
 .output-info {
-  position: absolute;
-  bottom: 1px;
+  margin-top: 1rem;
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -214,4 +213,16 @@ header {
 
 .stop-btn:hover{
   background: rgb(192, 27, 27);
+}
+
+@media screen and (max-width:900px) {
+    html {
+      font-size: 12px;
+    }
+    .dashboard {
+     grid-template-columns: 1fr;
+    }
+    .output {
+      height: 400px;
+    }
 }
