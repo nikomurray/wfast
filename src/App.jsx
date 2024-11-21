@@ -9,7 +9,7 @@ export const AppContext = createContext();
 export default function App() {
   const [qrCode, setQrCode] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
-  const [isSendingMessages, setIsSendingMessages] = useState(stop);
+  const [isSendingMessages, setIsSendingMessages] = useState(false);
   const [messageData, setMessageData] = useState({
     message: "",
     interval: 3,
@@ -39,18 +39,16 @@ export default function App() {
     });
     socketInstance.on("login", (data) => {
       setIsLogin(data);
+      setQrCode(null);
     });
     socketInstance.on("totalNumbers", (data) => {
       setTotalNumbers(data);
     });
     socketInstance.on("report", (data) => {
       setCurrentCount((prev) => prev + 1);
-      if (data.status) {
-        setTotalSent((prev) => prev + 1);
-      } else {
-        setTotalFailed((prev) => prev + 1);
-      }
       setOutPutMessages((prev) => [...prev, data]);
+      setTotalSent((prev) => (data.status ? prev + 1 : prev));
+      setTotalFailed((prev) => (!data.status ? prev + 1 : prev));
     });
     socketInstance.on("finish", () => {
       setIsSendingMessages(false);
@@ -77,7 +75,7 @@ export default function App() {
         totalSent,
         totalFailed,
         currentCount,
-        clearAllValues
+        clearAllValues,
       }}
     >
       <Header />
