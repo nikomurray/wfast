@@ -31,7 +31,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    const socketInstance = io("http://localhost:3000");
+    const socketInstance = io("https://wfast-server.onrender.com");
     setSocket(socketInstance);
 
     socketInstance.on("qr", (data) => {
